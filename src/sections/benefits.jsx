@@ -12,7 +12,6 @@ const BENEFITS = [
     title: 'Increase Crop Productivity',
     description:
       'Maintain optimal environmental conditions with real-time monitoring and automated control systems that support healthier plant growth.',
-    highlighted: true,
   },
   {
     title: 'Save Time with Automation',
@@ -56,6 +55,10 @@ const BENEFITS = [
   },
 ];
 
+const SET_SIZE = BENEFITS.length;
+const MIDDLE_START = SET_SIZE * 2;
+const EXTENDED_BENEFITS = [...BENEFITS, ...BENEFITS, ...BENEFITS, ...BENEFITS, ...BENEFITS];
+
 const BenefitsSection = () => {
   const scrollRef = useRef(null);
   const sectionRef = useRef(null);
@@ -63,7 +66,11 @@ const BenefitsSection = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const CARD_WIDTH = 300; // px
+  const [activeIndex, setActiveIndex] = useState(MIDDLE_START);
+  const [isHovered, setIsHovered] = useState(false);
+  const [padding, setPadding] = useState(0);
+  const [cardWidth, setCardWidth] = useState(300);
+  const cardWidthRef = useRef(300);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -74,10 +81,103 @@ const BenefitsSection = () => {
     return () => obs.disconnect();
   }, []);
 
-  const scroll = (dir) => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: dir * (CARD_WIDTH + 24), behavior: 'smooth' });
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (scrollRef.current) {
+        const containerWidth = scrollRef.current.clientWidth;
+        
+        // To show EXACTLY one card on mobile without adjacent cards peeking:
+        // We set card width to containerWidth - 48. This gives 24px padding on each side.
+        // Since the flex gap is 24px, the next card will start exactly at the edge of the screen!
+        let calculatedWidth = window.innerWidth <= 800 ? containerWidth - 48 : 300;
+        
+        // Safe minimums
+        if (calculatedWidth < 240) calculatedWidth = 240;
+        if (window.innerWidth > 800) calculatedWidth = 300;
+        
+        setCardWidth(calculatedWidth);
+        cardWidthRef.current = calculatedWidth;
+        setPadding(containerWidth / 2 - calculatedWidth / 2);
+      }
+    };
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
+  const handleScrollEvent = () => {
+    if (!scrollRef.current) return;
+    const scrollPos = scrollRef.current.scrollLeft;
+    const cw = cardWidthRef.current + 24; // 24px gap
+    let closestIndex = Math.round(scrollPos / cw);
+    if (closestIndex < 0) closestIndex = 0;
+    if (closestIndex >= EXTENDED_BENEFITS.length) closestIndex = EXTENDED_BENEFITS.length - 1;
+    setActiveIndex(closestIndex);
+  };
+
+  // Infinite scroll jump logic
+  useEffect(() => {
+    if (isDragging) return;
+    const tid = setTimeout(() => {
+      if (activeIndex < SET_SIZE || activeIndex >= SET_SIZE * 4) {
+        const normalizedIndex = (activeIndex % SET_SIZE) + MIDDLE_START;
+        if (normalizedIndex !== activeIndex && scrollRef.current) {
+          scrollRef.current.scrollLeft = normalizedIndex * (cardWidthRef.current + 24);
+          setActiveIndex(normalizedIndex);
+        }
+      }
+    }, 600); // Wait for smooth scroll to finish
+    return () => clearTimeout(tid);
+  }, [activeIndex, isDragging]);
+
+  useEffect(() => {
+    const ref = scrollRef.current;
+    if (ref) {
+      ref.addEventListener('scroll', handleScrollEvent);
+      setTimeout(() => scrollToIndex(activeIndex), 100);
     }
+    return () => {
+      if (ref) ref.removeEventListener('scroll', handleScrollEvent);
+    };
+  }, [padding]); // wait for padding to set
+
+  const scrollToIndex = (index) => {
+    if (scrollRef.current) {
+      const cw = cardWidthRef.current + 24;
+      const scrollPos = index * cw;
+      scrollRef.current.scrollTo({ left: scrollPos, behavior: 'smooth' });
+    }
+  };
+
+  // Auto-scroll logic
+  useEffect(() => {
+    if (isHovered || isDragging) return;
+    const timer = setInterval(() => {
+      if (activeIndex <= 0 || activeIndex >= EXTENDED_BENEFITS.length - 1) return;
+      setActiveIndex((prev) => {
+        const next = prev + 1;
+        scrollToIndex(next);
+        return next;
+      });
+    }, 8000);
+    return () => clearInterval(timer);
+  }, [isHovered, isDragging, padding, activeIndex]);
+
+  const scroll = (dir) => {
+    let next = activeIndex + dir;
+    if (next < 0) next = 0;
+    if (next >= EXTENDED_BENEFITS.length) next = EXTENDED_BENEFITS.length - 1;
+    scrollToIndex(next);
+  };
+
+  const snapToClosest = () => {
+    if (!scrollRef.current) return;
+    const scrollPos = scrollRef.current.scrollLeft;
+    const cw = cardWidthRef.current + 24;
+    let closestIndex = Math.round(scrollPos / cw);
+    if (closestIndex < 0) closestIndex = 0;
+    if (closestIndex >= EXTENDED_BENEFITS.length) closestIndex = EXTENDED_BENEFITS.length - 1;
+    scrollToIndex(closestIndex);
   };
 
   const onMouseDown = (e) => {
@@ -85,8 +185,20 @@ const BenefitsSection = () => {
     setStartX(e.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
   };
-  const onMouseLeave = () => setIsDragging(false);
-  const onMouseUp = () => setIsDragging(false);
+  const onMouseLeave = () => { 
+    if (isDragging) {
+      setIsDragging(false);
+      snapToClosest();
+    }
+    setIsHovered(false); 
+  };
+  const onMouseEnter = () => setIsHovered(true);
+  const onMouseUp = () => {
+    if (isDragging) {
+      setIsDragging(false);
+      snapToClosest();
+    }
+  };
   const onMouseMove = (e) => {
     if (!isDragging) return;
     e.preventDefault();
@@ -107,13 +219,12 @@ const BenefitsSection = () => {
       <BgShape color="rgba(205,220,57,0.14)" size={170} bottom="10%" left="-40px" shape="teardrop" animate="float-reverse" blur={20} zIndex={0} />
       <BgShape color="rgba(38,166,154,0.12)" size={120} top="40%" right="10%" shape="hexagon" animate="pulse-soft" blur={20} zIndex={0} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div className="relative z-10 max-w-7xl mx-auto">
         {/* Heading */}
-        <div className={`text-center mb-12 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <p className="text-gray-500 text-sm font-semibold uppercase tracking-widest mb-2">Why Choose Us</p>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800">
+        <div className={`px-5 sm:px-8 lg:px-12 text-center transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ marginBottom: '4rem' }}>
+          <h2 className="text-normal sm:text-2xl lg:text-3xl font-semibold text-gray-800">
             Choose Us: Your Path to modernization and{' '}
-            <span className="text-gradient font-extrabold">Success</span>
+            <span className="text-blue-500 font-semibold">Success</span>
           </h2>
         </div>
 
@@ -123,47 +234,60 @@ const BenefitsSection = () => {
           className="scroll-container"
           onMouseDown={onMouseDown}
           onMouseLeave={onMouseLeave}
+          onMouseEnter={onMouseEnter}
           onMouseUp={onMouseUp}
           onMouseMove={onMouseMove}
         >
-          <div className="flex gap-6 pb-4" style={{ width: 'max-content' }}>
-            {BENEFITS.map((b, i) => (
+          <div className="flex gap-6 pb-4" style={{ width: 'max-content', paddingLeft: padding, paddingRight: padding }}>
+            {EXTENDED_BENEFITS.map((b, i) => {
+              const isHighlighted = i === activeIndex;
+              return (
               <div
                 key={i}
-                className={`green-hover-card rounded-2xl p-6 bg-white group ${b.highlighted ? 'ring-2 ring-green-500' : ''} transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                className={`relative overflow-hidden green-hover-card rounded-3xl p-6 sm:p-8 bg-white group transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
                 style={{
-                  border: b.highlighted ? '2px solid #4CAF50' : '1px solid #e8f5e9',
-                  boxShadow: b.highlighted
-                    ? '0 8px 32px rgba(76,175,80,0.25)'
-                    : '0 4px 20px rgba(0,0,0,0.05)',
-                  width: `${CARD_WIDTH}px`,
-                  minWidth: `${CARD_WIDTH}px`,
-                  background: b.highlighted
-                    ? 'linear-gradient(135deg, #2E7D32, #4CAF50)'
-                    : 'white',
+                  border: 'none',
+                  boxShadow: isHighlighted
+                    ? '0 12px 32px rgba(102,187,106,0.35)'
+                    : '0 4px 24px rgba(0,0,0,0.04)',
+                  width: `${cardWidth}px`,
+                  minWidth: `${cardWidth}px`,
+                  padding: '2.25rem 2rem',
                   transitionDelay: `${(i % 5) * 80}ms`,
                   flexShrink: 0,
                 }}
               >
-                <h3
-                  className="text-base font-bold mb-3 group-hover:text-white transition-colors"
-                  style={{ color: b.highlighted ? 'white' : '#1a1a2e' }}
-                >
-                  {b.title}
-                </h3>
-                <p
-                  className="text-sm leading-relaxed group-hover:text-white transition-colors"
-                  style={{ color: b.highlighted ? 'rgba(255,255,255,0.88)' : '#6B7280' }}
-                >
-                  {b.description}
-                </p>
+                {/* Smooth Gradient Background Layer */}
+                <div
+                  className="absolute inset-0 transition-opacity duration-700 ease-in-out pointer-events-none"
+                  style={{
+                    background: 'linear-gradient(135deg, #4CAF50 0%, #AED581 100%)',
+                    opacity: isHighlighted ? 1 : 0,
+                    zIndex: 0,
+                  }}
+                />
+                
+                <div className="relative z-10">
+                  <h3
+                    className="text-lg font-semibold mb-3 group-hover:text-white transition-colors duration-700"
+                    style={{ color: isHighlighted ? 'white' : '#1a1a2e' }}
+                  >
+                    {b.title}
+                  </h3>
+                  <p
+                    className="text-sm leading-relaxed group-hover:text-white transition-colors duration-700"
+                    style={{ color: isHighlighted ? 'rgba(255,255,255,0.9)' : '#6B7280' }}
+                  >
+                    {b.description}
+                  </p>
+                </div>
               </div>
-            ))}
+            )})}
           </div>
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex items-center justify-center gap-4 mt-8">
+        <div className="px-5 sm:px-8 lg:px-12 flex items-center justify-center gap-4 mt-8" style={{ marginTop: '3rem' }}>
           <button onClick={() => scroll(-1)} className="carousel-btn" aria-label="Previous">
             <ChevronLeft size={18} />
           </button>

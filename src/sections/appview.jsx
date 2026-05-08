@@ -29,35 +29,47 @@ const AppViewSection = () => {
         <div className="flex flex-col lg:flex-row items-center gap-12">
           {/* App Screenshots */}
           <div
-            className={`relative flex-1 transition-all duration-900 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-16'}`}
+            className={`relative w-full lg:w-2/3 transition-all duration-900 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-16'}`}
           >
-            <div className="relative flex items-end justify-center gap-4">
-              {/* Tablet image */}
-              <div className="relative" style={{ zIndex: 2 }}>
-                <img
-                  src="/Tab.png"
-                  alt="GreenVerse Tablet App"
-                  className="w-full max-w-sm rounded-2xl shadow-2xl"
-                  style={{ boxShadow: '0 24px 60px rgba(46,125,50,0.2)' }}
-                />
-              </div>
-              {/* Mobile image overlapping */}
-              <div className="relative -ml-12 mb-0" style={{ zIndex: 3 }}>
-                <img
-                  src="/mobite.png"
-                  alt="GreenVerse Mobile App"
-                  className="w-32 sm:w-44 rounded-2xl shadow-2xl animate-float"
-                  style={{ boxShadow: '0 20px 50px rgba(46,125,50,0.25)' }}
-                />
-              </div>
+            {/* Image stack: tablet as base, mobile overlapping right side */}
+            <div
+              className="relative w-11/12 md:w-3/4 lg:w-full mx-auto"
+              style={{ paddingRight: '12%' }}
+            >
+              {/* Tablet image — large base layer */}
+              <img
+                src="/Tab.png"
+                alt="GreenVerse Tablet App"
+                className="rounded-2xl block w-full"
+                style={{
+                  zIndex: 1,
+                }}
+              />
+              {/* Mobile image — portrait, overlapping right edge of tablet */}
+              <img
+                src="/mobite.png"
+                alt="GreenVerse Mobile App"
+                className="absolute rounded-2xl"
+                style={{
+                  width: '24%',
+                  right: '-4%',
+                  top: '60%',
+                  transform: 'translateY(-50%)',
+                  zIndex: 2,
+                }}
+              />
             </div>
           </div>
 
           {/* Text Content */}
           <div
-            className={`flex-1 transition-all duration-900 delay-200 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-16'}`}
+            className={`w-full lg:w-1/3 border-l-4 border-[#4CAF50] transition-all duration-900 delay-200 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-16'}`}
+            style={{ paddingLeft: '4rem' }}
           >
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-800 leading-snug mb-6">
+            <h2 
+              className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-800 leading-snug"
+              style={{ marginBottom: '1rem' }}
+            >
               Your Greenhouse Control at Your{' '}
               <span className="text-gradient">Fingertips</span>,<br />
               Wherever You Go

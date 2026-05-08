@@ -159,7 +159,7 @@ const BenefitsSection = () => {
         scrollToIndex(next);
         return next;
       });
-    }, 8000);
+    }, 5000);
     return () => clearInterval(timer);
   }, [isHovered, isDragging, padding, activeIndex]);
 

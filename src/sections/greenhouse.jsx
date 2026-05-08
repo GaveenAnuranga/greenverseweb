@@ -25,12 +25,7 @@ const TECH_ITEMS = [
     highlightWords: ['Automate', 'Actions'],
     description:
       'Create smart automation rules and schedules to control fans, pumps, lights, valves, and other devices automatically based on environmental conditions.',
-  },
-  {
-    title: 'Smart Notifications',
-    description:
-      'Receive instant alerts and warning notifications for abnormal conditions, device failures, or threshold limits to keep your greenhouse safe and stable.',
-  },
+  }
 ];
 
 const GreenhouseSection = () => {

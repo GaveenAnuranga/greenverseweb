@@ -532,10 +532,10 @@ body {
   overflow: hidden;
 }
 
-/* Hide right side border on small screens, keep a small left border */
+/* Keep both side borders on small screens, give them equal width */
 @media (max-width: 1024px) {
   .side-border--right {
-    display: none;
+    width: 24px;
   }
   .side-border--left {
     width: 24px;

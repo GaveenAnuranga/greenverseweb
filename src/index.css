@@ -458,9 +458,9 @@ body {
   color: white;
 }
 
-/* ===== JOIN SHAPE POLYGON ===== */
-.join-shape {
-  clip-path: polygon(0 0, 80% 0, 100% 15%, 100% 100%, 20% 100%, 0 85%);
+/* ===== JOIN SHAPE HEXAGON ===== */
+.join-hexagon {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }
 
 @media (max-width: 768px) {

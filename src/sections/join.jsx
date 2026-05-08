@@ -1,5 +1,4 @@
 import { useRef, useEffect, useState } from 'react';
-import BgShape from '../componants/BgShape';
 
 const JoinSection = () => {
   const sectionRef = useRef(null);
@@ -24,86 +23,70 @@ const JoinSection = () => {
   };
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative section-pad overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, #1a6b3a 0%, #2196F3 100%)',
-      }}
-    >
-      {/* Background Shapes */}
-      <BgShape color="rgba(255,255,255,0.08)" size={300} top="-60px" right="-60px" shape="blob" animate="float" blur={20} zIndex={0} />
-      <BgShape color="rgba(255,255,255,0.06)" size={200} bottom="-40px" left="-40px" shape="circle" animate="float-reverse" blur={15} zIndex={0} />
-      <BgShape color="rgba(255,255,255,0.05)" size={150} top="30%" left="30%" shape="hexagon" animate="pulse-soft" blur={10} zIndex={0} />
+    <>
+      <section
+        ref={sectionRef}
+        className="relative overflow-hidden py-12"
+        style={{ background: '#f8fafc' }}
+      >
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 relative">
+          {/* Main rounded container */}
+          <div
+            className="relative rounded-3xl overflow-hidden text-center"
+            style={{
+              background: 'linear-gradient(135deg, #64B5F6 0%, #42A5F5 50%, #2196F3 100%)',
+              boxShadow: '0 20px 50px rgba(33, 150, 243, 0.25)',
+              transition: 'opacity 1s, transform 1s',
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'scale(1)' : 'scale(0.95)',
+              paddingTop: '56px',
+              paddingBottom: '56px',
+              paddingLeft: '32px',
+              paddingRight: '32px',
+            }}
+          >
+            {/* Subtle white overlay */}
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.04)', borderRadius: 'inherit', pointerEvents: 'none' }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left: Text */}
-          <div className={`transition-all duration-800 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug mb-6">
-              Ready to Transform Your Greenhouse into a Smart Farming System?
-            </h2>
-            <button
-              onClick={scrollToContact}
-              className="btn-primary"
-              style={{
-                background: 'white',
-                color: 'var(--color-primary)',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-              }}
-            >
-              Join with Us
-            </button>
-          </div>
-
-          {/* Right: Polygon-shaped image */}
-          <div className={`relative flex justify-center transition-all duration-800 delay-200 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}>
-            {/* Decorative polygon frame */}
-            <div
-              className="relative"
-              style={{ width: '340px', maxWidth: '100%' }}
-            >
-              {/* Polygon clipped image container */}
-              <div
-                className="join-shape overflow-hidden"
+            <div className="relative" style={{ zIndex: 10, maxWidth: '600px', margin: '0 auto' }}>
+              <h2
                 style={{
-                  width: '100%',
-                  height: '300px',
-                  background: 'rgba(255,255,255,0.15)',
-                  backdropFilter: 'blur(8px)',
+                  fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
+                  fontWeight: 700,
+                  color: 'white',
+                  lineHeight: 1.3,
+                  marginBottom: '28px',
+                  textShadow: '0 1px 3px rgba(0,0,0,0.1)',
                 }}
               >
-                <img
-                  src="/join-team.jpg"
-                  alt="GreenVerse Team"
-                  className="w-full h-full object-cover object-center"
-                  style={{ filter: 'brightness(0.9)' }}
-                  onError={(e) => {
-                    // Fallback if image not found
-                    e.target.style.display = 'none';
-                    e.target.parentElement.style.background = 'rgba(255,255,255,0.15)';
-                  }}
-                />
-              </div>
+                Ready to Transform Your Greenhouse into a Smart Farming System?
+              </h2>
 
-              {/* Floating decorative elements */}
-              <div
-                className="absolute -top-4 -right-4 w-16 h-16 rounded-2xl flex items-center justify-center animate-float"
-                style={{ background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)' }}
+              <button
+                onClick={scrollToContact}
+                style={{
+                  padding: '12px 36px',
+                  background: 'white',
+                  color: '#2196F3',
+                  fontWeight: 600,
+                  fontSize: '0.95rem',
+                  borderRadius: '999px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
+                  transition: 'all 0.3s',
+                  marginBottom: '0',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(0,0,0,0.18)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.12)'; }}
               >
-                <span className="text-2xl">🌱</span>
-              </div>
-              <div
-                className="absolute -bottom-4 -left-4 w-12 h-12 rounded-xl flex items-center justify-center animate-float-reverse"
-                style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)' }}
-              >
-                <span className="text-xl">🌿</span>
-              </div>
+                Join with Us
+              </button>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

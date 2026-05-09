@@ -29,11 +29,13 @@ const JoinSection = () => {
         className="relative overflow-hidden py-12"
         style={{ background: '#f8fafc' }}
       >
-        <div className="max-w-4xl mx-auto px-5 sm:px-8 relative">
+        <div className="container relative">
           {/* Main rounded container */}
           <div
-            className="relative rounded-3xl overflow-hidden text-center"
+            className="relative rounded-3xl overflow-hidden text-center mx-auto"
             style={{
+              maxWidth: '55rem',
+              margin: '0 auto',
               background: 'linear-gradient(135deg, #64B5F6 0%, #42A5F5 50%, #2196F3 100%)',
               boxShadow: '0 20px 50px rgba(33, 150, 243, 0.25)',
               transition: 'opacity 1s, transform 1s',

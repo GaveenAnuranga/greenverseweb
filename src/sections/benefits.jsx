@@ -219,9 +219,9 @@ const BenefitsSection = () => {
       <BgShape color="rgba(205,220,57,0.14)" size={170} bottom="10%" left="-40px" shape="teardrop" animate="float-reverse" blur={20} zIndex={0} />
       <BgShape color="rgba(38,166,154,0.12)" size={120} top="40%" right="10%" shape="hexagon" animate="pulse-soft" blur={20} zIndex={0} />
 
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="relative z-10 container">
         {/* Heading */}
-        <div className={`px-5 sm:px-8 lg:px-12 text-center transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ marginBottom: '4rem' }}>
+        <div className={`text-center transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ marginBottom: '4rem' }}>
           <h2 className="text-normal sm:text-2xl lg:text-3xl font-semibold text-gray-800">
             Choose Us: Your Path to modernization and{' '}
             <span className="text-blue-500 font-semibold">Success</span>

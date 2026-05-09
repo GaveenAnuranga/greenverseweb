@@ -19,22 +19,22 @@ const HeroSection = ({
     <section
       id="home"
       ref={sectionRef}
-      className="relative lg:h-screen min-h-[400px] lg:max-h-[700px] flex items-center overflow-hidden bg-white pb-16 lg:pb-0"
+      className="relative lg:h-screen min-h-[400px] lg:max-h-[700px] flex items-center justify-center overflow-hidden bg-white pb-16 lg:pb-0"
       style={{ paddingTop: '68px' }}
     >
       {/* Background Image Layer — hidden on mobile, visible on lg+ */}
-      <div className="hidden lg:block absolute top-[88px] bottom-0 inset-x-0 z-0">
-        <div className="absolute inset-0 w-full h-full">
+      <div className="hidden lg:block absolute top-[88px] bottom-0 inset-x-2 z-0 container px-8 sm:px-8 lg:px-12">
+        <div className="relative w-full h-full">
           <img
             src="/greenhome.png"
             alt="GreenVerse Smart Greenhouse"
-            className="w-full h-full object-cover object-right lg:object-center rounded-3xl lg:rounded-[40px]"
+            className="absolute inset-0 w-full h-full object-cover object-right lg:object-center rounded-3xl lg:rounded-[40px]"
           />
+          <div className="absolute inset-0 lg:w-[65%] bg-linear-to-b lg:bg-linear-to-r from-white via-white/95 lg:via-white to-transparent z-10"></div>
         </div>
-        <div className="absolute inset-0 lg:w-[65%] bg-linear-to-b lg:bg-linear-to-r from-white via-white/95 lg:via-white to-transparent z-10"></div>
       </div>
 
-      <div className="relative z-20 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full py-16 md:py-0 h-full">
+      <div className="relative z-20 container py-16 md:py-0 h-full">
         <div className="flex flex-col lg:flex-row justify-start lg:justify-between items-start lg:items-center pt-8 lg:pt-0 h-full">
 
           {/* Left Content */}

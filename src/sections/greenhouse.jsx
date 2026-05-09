@@ -66,7 +66,7 @@ const GreenhouseSection = () => {
       <div className="h-6 sm:h-16 w-full"></div>
 
       {/* Heading (outside the background shape section) */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div className="container">
         <div className={`text-center transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-2xl sm:text-2xl lg:text-3xl font-normal text-gray-800">
             Intelligent greenhouse technology built for{' '}
@@ -85,7 +85,7 @@ const GreenhouseSection = () => {
         <BgShape color="rgba(76,175,80,0.10)" size={150} bottom="0" right="-40px" shape="leaf" animate="float" blur={20} zIndex={0} />
         <BgShape color="rgba(38,166,154,0.10)" size={100} top="50%" left="50%" shape="circle" animate="pulse-soft" blur={30} zIndex={0} />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="relative z-10 container">
           <div
             className="rounded-3xl bg-transparent shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] px-8 sm:px-16 lg:px-20"
             style={{ border: '2px solid #e8f5e9', maxWidth: '64rem', margin: '0 auto' }}

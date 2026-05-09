@@ -74,7 +74,7 @@ const FeaturesSection = () => {
       <BgShape color="rgba(76,175,80,0.12)" size={180} bottom="5%" left="-30px" shape="blob" animate="float-reverse" blur={25} zIndex={0} />
       <BgShape color="rgba(100,181,246,0.12)" size={130} top="40%" right="20%" shape="circle" animate="pulse-soft" blur={30} zIndex={0} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div className="relative z-10 container">
         {/* Heading */}
         <div className={`transition-all align-center duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ marginBottom: '6rem' }}>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl text-center font-medium text-gray-800 leading-snug">

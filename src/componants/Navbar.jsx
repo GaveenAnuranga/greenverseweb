@@ -47,7 +47,7 @@ const Navbar = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'navbar-glass' : 'bg-transparent'}`}
       style={{ fontFamily: 'var(--font-primary)' }}
     >
-      <div className="max-w-7xl mx-auto px-8 sm:px-10 lg:px-16 h-[68px] flex items-center justify-between">
+      <div className="container h-[68px] flex items-center justify-between">
         {/* Logo */}
         <button onClick={() => scrollTo('home')} className="flex items-center gap-2 group" aria-label="GreenVerse Home">
           <img src="/greenlogo.png" alt="GreenVerse Logo" className="h-8 w-auto transition-transform duration-300 group-hover:scale-110" />

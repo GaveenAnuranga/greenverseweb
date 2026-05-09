@@ -71,7 +71,7 @@ const ContactFooter = () => {
       style={{ background: '#0D1117', color: 'white' }}
     >
       {/* Main Footer Content */}
-      <div className={`max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <div className={`container py-16 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Links Columns */}
           {Object.entries(footerLinks).map(([heading, links]) => (
@@ -143,7 +143,7 @@ const ContactFooter = () => {
 
       {/* Bottom Bar */}
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="container py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* Logo */}
           <div className="flex items-center gap-2">
             <img src="/greenlogo.png" alt="GreenVerse" className="h-6 w-auto" />

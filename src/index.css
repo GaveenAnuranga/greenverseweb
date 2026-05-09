@@ -469,89 +469,40 @@ body {
   }
 }
 
-/* ===== PAGE SHELL — SIDE BORDER LAYOUT ===== */
-
+/* ===== PAGE ROOT — GLOBAL WRAPPER ===== */
 /*
-  .page-shell   : full-viewport-width flex row (the outermost wrapper)
-  .side-border  : decorative flanking panels shown only on large screens
-  .page-content : the centred content column (max 1280 px)
+  .page-root    : simple full-width wrapper, no side offsets
+  .section-inner: standardised centred content column used by every section
 */
-
-.page-shell {
-  display: flex;
-  min-height: 100vh;
+.page-root {
   width: 100%;
+  min-height: 100vh;
   background: var(--color-bg);
-  position: relative;
-}
-
-/* ---- Side border panels ---- */
-.side-border {
-  flex: 0 0 auto;
-  width: clamp(26px, 3vw, 40px);
-  /* 26 px minimum, grows up to 40 px */
   display: flex;
+  flex-direction: column;
   align-items: stretch;
-  justify-content: center;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  /* fills viewport, stays while scrolling */
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 1;
 }
 
-.side-border--left {
-  left: 0%;
-  width: clamp(100px, 6vw, 120px);
+/* Centred content column — use inside every section instead of repeating max-w classes */
+.section-inner {
+  width: 100%;
+  max-width: 80rem;       /* 1280px — same as Tailwind’s max-w-7xl */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;  /* 20px on mobile */
+  padding-right: 1.25rem;
 }
 
-.side-border--right {
-  right: 0;
-  width: clamp(12px, 6vw, 120px);
-}
-
-/* Subtle vertical divider line inside the panel */
-.side-border__line {
-  width: 1px;
-  height: 100%;
-  background: linear-gradient(to bottom,
-      transparent 0%,
-      rgba(46, 125, 50, 0.12) 15%,
-      rgba(76, 175, 80, 0.18) 50%,
-      rgba(46, 125, 50, 0.12) 85%,
-      transparent 100%);
-}
-
-/* ---- Centre content column ---- */
-.page-content {
-  flex: 1 1 auto;
-  min-width: 0;
-  /* prevents flex overflow */
-  overflow: hidden;
-}
-
-/* Keep both side borders on small screens, give them equal width */
-@media (max-width: 1024px) {
-  .side-border--right {
-    width: 24px;
-  }
-  .side-border--left {
-    width: 24px;
+@media (min-width: 640px) {
+  .section-inner {
+    padding-left: 2rem;   /* 32px on sm */
+    padding-right: 2rem;
   }
 }
 
-/* ===== NAVBAR — respect page-content width ===== */
-/*
-  The navbar is position:fixed so it escapes the flex flow.
-  We cap it to match the page-content column by watching the
-  side-border width via a CSS custom property set on .page-shell.
-  On large screens we add matching inset so the bar aligns with content.
-*/
-@media (min-width: 1025px) {
-  nav.fixed {
-    left: clamp(60px, 6vw, 100px);
-    right: clamp(16px, 3vw, 40px);
+@media (min-width: 1024px) {
+  .section-inner {
+    padding-left: 3rem;   /* 48px on lg */
+    padding-right: 3rem;
   }
 }

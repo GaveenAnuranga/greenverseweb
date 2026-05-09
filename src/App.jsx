@@ -24,25 +24,12 @@ const LandingPage = () => (
 );
 
 /* ── PageLayout ──────────────────────────────────────────────────────────────
-   Wraps every route in a centred column with decorative side borders so the
-   content never touches the screen edges — matching the Figma design.
+   Simple full-width wrapper — centering is handled per-section via
+   max-w-7xl mx-auto with consistent horizontal padding.
    ─────────────────────────────────────────────────────────────────────────── */
 const PageLayout = ({ children }) => (
-  <div className="page-shell">
-    {/* Left side border */}
-    <aside className="side-border side-border--left" aria-hidden="true">
-      <div className="side-border__line" />
-    </aside>
-
-    {/* Main centred content column */}
-    <div className="page-content">
-      {children}
-    </div>
-
-    {/* Right side border */}
-    <aside className="side-border side-border--right" aria-hidden="true">
-      <div className="side-border__line" />
-    </aside>
+  <div className="page-root">
+    {children}
   </div>
 );
 

@@ -87,8 +87,8 @@ const GreenhouseSection = () => {
 
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <div
-            className="rounded-3xl bg-transparent  shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] px-8 sm:px-16 lg:px-20"
-            style={{ border: '2px solid #e8f5e9' }}
+            className="rounded-3xl bg-transparent shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] px-8 sm:px-16 lg:px-20"
+            style={{ border: '2px solid #e8f5e9', maxWidth: '64rem', margin: '0 auto' }}
           >
             {/* Top gap */}
             <div className="h-8 sm:h-8 lg:h-8 w-full"></div>

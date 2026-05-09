@@ -85,29 +85,31 @@ const FeaturesSection = () => {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-          {FEATURES.map((f, i) => (
-            <div
-              key={i}
-              className={`green-hover-card rounded-2xl bg-white group transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-              style={{
-                padding: '2rem',
-                border: '1px transparent #e8f5e9',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
-                transitionDelay: `${i * 80}ms`,
-              }}
-            >
-              {/* Icon */}
+        <div style={{ maxWidth: '64rem', margin: '0 auto' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+            {FEATURES.map((f, i) => (
               <div
-                className={`card-icon-wrapper w-14 h-14 flex items-center justify-center rounded-xl bg-transparent transition-all duration-300 ${f.iconClass}`}
-                style={{ marginBottom: '1.5rem' }}
+                key={i}
+                className={`green-hover-card rounded-2xl bg-white group transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                style={{
+                  padding: '2rem',
+                  border: '1px transparent #e8f5e9',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+                  transitionDelay: `${i * 80}ms`,
+                }}
               >
-                <f.Icon size={36} />
+                {/* Icon */}
+                <div
+                  className={`card-icon-wrapper w-14 h-14 flex items-center justify-center rounded-xl bg-transparent transition-all duration-300 ${f.iconClass}`}
+                  style={{ marginBottom: '1.5rem' }}
+                >
+                  <f.Icon size={36} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 group-hover:text-white transition-colors" style={{ marginBottom: '0.75rem' }}>{f.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed group-hover:text-white transition-colors">{f.description}</p>
               </div>
-              <h3 className="text-xl font-bold text-gray-800 group-hover:text-white transition-colors" style={{ marginBottom: '0.75rem' }}>{f.title}</h3>
-              <p className="text-sm text-gray-500 leading-relaxed group-hover:text-white transition-colors">{f.description}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
